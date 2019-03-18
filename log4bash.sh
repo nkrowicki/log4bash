@@ -7,6 +7,16 @@
 #--------------------------------------------------------------------------------------------------
 set -e  # Fail on first error
 
+# Vars
+
+# Full path of this file without filename
+pathProject=`dirname $(realpath $0)`
+# Cd folder that contain project
+cd $pathProject
+# Log Filename 
+filenameLog="kiosk.log"
+LOGFILE="${pathProject}/${filenameLog}"
+
 # Useful global variables that users may wish to reference
 SCRIPT_ARGS="$@"
 SCRIPT_NAME="$0"
@@ -31,6 +41,20 @@ usage() {
 }
 
 # End Help Section
+#--------------------------------------------------------------------------------------------------
+
+#--------------------------------------------------------------------------------------------------
+
+# Begin Control Line Section
+
+RETAIN_NUM_LINES=1000
+
+function retainNumLines {
+    TMP=$(tail -n $RETAIN_NUM_LINES $LOGFILE 2>/dev/null) && echo "${TMP}" > $LOGFILE
+    return 0;
+}
+
+# End Control Line Section
 #--------------------------------------------------------------------------------------------------
 
 #--------------------------------------------------------------------------------------------------
@@ -70,7 +94,10 @@ log() {
     [[ -z ${log_level} ]] && log_level="INFO";
     [[ -z ${log_color} ]] && log_color="${LOG_INFO_COLOR}";
 
-    echo -e "${log_color}[$(date +"%Y-%m-%d %H:%M:%S %Z")] [${log_level}] ${log_text} ${LOG_DEFAULT_COLOR}";
+    # Check and retains num lines
+    retainNumLines
+
+    echo -e "${log_color}[$(date +"%Y-%m-%d %H:%M:%S %Z")] [${log_level}] ${log_text} ${LOG_DEFAULT_COLOR}" >> $LOGFILE;
     return 0;
 }
 
