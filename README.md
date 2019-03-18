@@ -4,7 +4,7 @@ Let's face it - plain old **echo** just doesn't cut it.  **log4bash** is an atte
 
 ## Contributors
 
-Fred Palmer
+Fred Palmer, Nahuel Krowicki
 
 ## Using log4bash
 
@@ -29,6 +29,14 @@ Fred Palmer
     log_speak "Resistance is futile";
 
 ```
+
+Note: 
+
+On script **log4bash.sh** edit:
+
+Variable **"FilenameLog"** which will be the name of the file where the log events will be written
+
+Optional: Edit **pathproject** var and **LOGFILE** var.
 
 ## An Overview of log4bash
 
